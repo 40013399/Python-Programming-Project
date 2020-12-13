@@ -1,0 +1,79 @@
+class pharmacy:
+    def __init__(self,dict, name):
+        self.medlist=dict
+        self.name=name
+        self.cart={}
+    def displaymed(self):
+        print(f"we have following medicines: {self.name}")
+        for med in self.medlist:
+            print(med)
+    def addmedtobuy(self,user,med,quan):
+        if med not in self.cart.keys():
+            self.cart.update({med:user})
+            print("cost of medicine",self.medlist[med])
+            #print(f"price of {med} is {self.medlist[med]}")
+            a=self.medlist[med]
+            b=a*int(quan)
+            print(b)
+        else:
+            print(f"{self.cart[med]} is out of stock")
+    def addmed(self, med,cost):
+        if med not in self.medlist:
+            self.medlist.update({med:cost})
+            print(f"{med} is added to the medlist")
+    def deletemedicine(self,med):
+        cost=self.medlist[med]
+        self.medlist.pop((med))
+        print(f"{med} is deleted from the medlist")
+   
+def main():
+    LTTS = pharmacy({"Crocin": 10, 'Cypon':20, 'alday':2, 'Histocart-b':4, 'coldact':5, 'Dolo':6}, "LTTS")
+
+    while(True):
+        print(f"Welcome to the {LTTS.name} pharmacy. Enter your choice to continue")
+        print("1. Display medicine")
+        print("2. add med to buy")
+        print("3. Add medine")
+        print("4. Delete medicine")
+        user_choice = input()
+        if user_choice not in ['1','2','3','4']:
+            print("Please enter a valid option")
+            continue
+
+        else:
+            user_choice = int(user_choice)
+
+
+        if user_choice == 1:
+            LTTS.displaymed()
+
+        elif user_choice == 2:
+            med = input("Enter the name of the med you want to buy:")
+            user = input("Enter your name")
+            quan = input("Enter the quantity")
+            LTTS.addmedtobuy(user, med, quan)
+
+        elif user_choice == 3:
+            med = input("Enter the name of the med you want to add:")
+            cost=input("Enter the price of medicine:")
+            LTTS.addmed(med,cost)
+
+        elif user_choice == 4:
+            med = input("Enter the name of the medicine you want to delete:")
+            LTTS.deletemedicine(med)
+
+        else:
+            print("Not a valid option")
+
+
+
+        print("Press q to quit and c to continue")
+        user_choice2 = ""
+        while(user_choice2!="c" and user_choice2!="q"):
+            user_choice2 = input()
+            if user_choice2 == "q":
+                exit()
+
+            elif user_choice2 == "c":
+                continue
+main()
