@@ -1,0 +1,203 @@
+import os
+import sys
+class medicalstore:
+
+    def __init__(self,dict,name):
+
+        medicalstore.medicinelist=dict
+
+        self.name=name
+
+        medicalstore.cart={}
+       
+class user(medicalstore):
+    def __init__(self,dict,name):
+        medicalstore.__init__(self,dict,name)
+    def displaymedicines(self):
+
+        print(f"we have following medicines: {self.name}")
+
+        for medicine in medicalstore.medicinelist:
+
+            print(medicine)
+
+    def purchasemedicine(self,user,medicine,quantity):
+
+        if medicine not in self.cart.keys():
+
+            medicalstore.cart.update({medicine:user})
+
+            print("cost of medicine",medicalstore.medicinelist[medicine])
+
+            value=medicalstore.medicinelist[medicine]
+
+            amount=value*int(quantity)
+
+            print("amount to be paid",amount)
+
+        else:
+
+            print(f"{medicalstore.medicinelist[medicine]} is out of stock")
+class admin(user):
+    def __init__(self,dict,name):
+        user.__init__(self,dict,name)
+    def addmedicinetostore(self, medicine,cost):
+
+        if medicine not in medicalstore.medicinelist:
+
+            medicalstore.medicinelist.update({medicine:cost})
+
+            print(f"{medicine} is added to the medlist")
+
+    def deletemedicinefromstore(self,medicine):
+
+        cost=medicalstore.medicinelist[medicine]
+
+        medicalstore.medicinelist.pop((medicine))
+
+        print(f"{medicine} is deleted from the medlist")
+
+def main():
+   
+    LTTS =admin({"Crocin": 10, 'Cypon':20, 'alday':2, 'Histocart-b':4, 'coldact':5, 'Dolo':6}, "LTTS")
+    #LTTS=admin()
+    print(os.name)
+    print(sys.path)
+    print(sys.version)
+    while(True):
+        admin_user_mode=input("Enter your mode")
+
+        if admin_user_mode=="1":
+
+            password=input("Enter your password")
+
+            if password=="1423":
+
+                while(True):
+
+                    print(f"Welcome to the {LTTS.name} pharmacy. Enter your choice to continue")
+
+                    print("1. Add medicine to store")
+
+                    print("2. Delete medicine from store")
+
+                    user_choice = input()
+
+                    if user_choice not in ['1','2']:
+
+                        print("Please enter a valid option")
+
+                        continue
+
+                    else:
+
+                        user_choice = int(user_choice)
+   
+                        if user_choice == 1:
+
+                           medicine = input("Enter the name of the medicine you want to add:")
+
+                           cost=int(input("Enter the price of medicine:"))
+
+                           LTTS.addmedicinetostore(medicine,cost)
+                           medicalstore.medicinelist.update({medicine:cost})
+                           LTTS.displaymedicines()
+                   
+
+                        elif user_choice == 2:
+
+                             medicine = input("Enter the name of the medicine you want to delete:")
+
+                             LTTS.deletemedicinefromstore(medicine)
+
+                        else:
+
+                            print("Not a valid option")
+               
+
+                        print("Press q to quit and c to continue")
+
+                        user_choice2 = ""
+
+                    #while(user_choice2!="c" and user_choice2!="q"):
+
+                        user_choice2 = input()
+
+                        if user_choice2 == "q":
+                            break
+
+                            #os._exit(0)
+
+                        elif user_choice2 == "c":
+
+                            continue
+               
+            else:
+
+                print("Incorrect Password")
+               
+           
+        elif admin_user_mode=="2":
+            password=input("Enter your password")
+
+            if password=="1213":
+
+                while(True):
+                    print(f"Welcome to the {LTTS.name} pharmacy. Enter your choice to continue")
+
+                    print("1. Display medicines")
+
+                    print("2. add medicicne to purchase")
+                    user_choice = input()
+
+                    if user_choice not in ['1','2']:
+
+                        print("Please enter a valid option")
+
+                        continue
+
+                    else:
+
+                        user_choice = int(user_choice)
+                        if user_choice == 1:
+                            LTTS.displaymedicines()
+           
+                        elif user_choice == 2:
+                            medicine = input("Enter the name of the medicine you want to buy:")
+
+                            user = input("Enter the customer name")
+
+                            quantity = input("Enter the quantity")
+
+                            LTTS.purchasemedicine(user, medicine, quantity)
+
+                     
+                        else:
+
+                            print("Not a valid option")
+               
+
+                        print("Press q to quit and c to continue")
+
+                        user_choice2 = ""
+
+                        #while(user_choice2!="c" and user_choice2!="q"):
+
+                        user_choice2 = input()
+
+                        if user_choice2 == "q":
+                            break
+
+                            #os._exit(0)
+
+                        elif user_choice2 == "c":
+
+                            continue
+               
+            else:
+
+                print("Incorrect Password")
+        else:
+            print("Invalid Mode")
+
+main()
